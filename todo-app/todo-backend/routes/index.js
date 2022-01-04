@@ -16,4 +16,9 @@ router.get('/', async (req, res) => {
   });
 });
 
+router.get('/statistics', async (req, res) => {
+  const added_todos = Number(await redis.getAsync('count'))
+  res.json({ added_todos })
+})
+
 module.exports = router;
