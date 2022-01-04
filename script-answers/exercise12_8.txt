@@ -1,0 +1,62 @@
+Script started on 2022-01-04 13:12:24+02:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="120" LINES="30"]
+]0;mk@Nightshade2: ~[01;32mmk@Nightshade2[00m:[01;34m~[00m$ docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED        STATUS         PORTS                     NAMES
+1151d5ed2d05   mongo     "docker-entrypoint.s…"   23 hours ago   Up 8 minutes   0.0.0.0:3456->27017/tcp   todo-backend_mongo_1
+]0;mk@Nightshade2: ~[01;32mmk@Nightshade2[00m:[01;34m~[00m$ docker ec[Kxec -it todo-backend_mongo_1 bash
+]0;root@1151d5ed2d05: /root@1151d5ed2d05:/# mongo -u root -p example
+MongoDB shell version v5.0.5
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("2d7f3f09-7242-45d3-948f-c7e7de51941d") }
+MongoDB server version: 5.0.5
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+---
+The server generated these startup warnings when booting: 
+        2022-01-04T11:04:10.953+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2022-01-04T11:04:11.537+00:00: /sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never'
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show dbs[3G[Jshow dbs[11G
+admin         0.000GB
+config        0.000GB
+local         0.000GB
+the_database  0.000GB
+> use the_database[3G[Juse the_database[19G
+switched to db the_database
+> show collections[3G[Jshow collections[19G
+todos
+> db.todos.find({})[3G[Jdb.todos.find({})[20G
+{ "_id" : ObjectId("61cdb82b58cfb0a650b81c0d"), "text" : "Write code", "done" : true }
+{ "_id" : ObjectId("61cdb82b58cfb0a650b81c0e"), "text" : "Learn about containers", "done" : false }
+> db.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: false } )[3G[Jdb.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: false } )[93G
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("61d42d7ff552189ecf2d853e")
+}
+> db.todos.find({})[3G[Jdb.todos.find({})[20G
+{ "_id" : ObjectId("61cdb82b58cfb0a650b81c0d"), "text" : "Write code", "done" : true }
+{ "_id" : ObjectId("61cdb82b58cfb0a650b81c0e"), "text" : "Learn about containers", "done" : false }
+{ "_id" : ObjectId("61d42d7ff552189ecf2d853e"), "text" : "Increase the number of tools in my toolbelt", "done" : false }
+> quit()[3G[Jquit()[9G
+]0;root@1151d5ed2d05: /root@1151d5ed2d05:/# exit
+exit
+]0;mk@Nightshade2: ~[01;32mmk@Nightshade2[00m:[01;34m~[00m$ curl http://localhost:3000/todos
+[{"_id":"61cdb82b58cfb0a650b81c0d","text":"Write code","done":true},{"_id":"61cdb82b58cfb0a650b81c0e","text":"Learn about containers","done":false},{"_id":"61d42d7ff552189ecf2d853e","text":"Increase the number of tools in my toolbelt","done":false}]]0;mk@Nightshade2: ~[01;32mmk@Nightshade2[00m:[01;34m~[00m$ exit
+exit
+
+Script done on 2022-01-04 13:24:14+02:00 [COMMAND_EXIT_CODE="0"]
