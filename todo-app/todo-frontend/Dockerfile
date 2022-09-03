@@ -8,14 +8,14 @@ FROM base as test
 WORKDIR /usr/src/app
 COPY --from=base /usr/src/app .
 RUN npm ci
-ENV REACT_APP_BACKEND_URL="http://localhost:3000"
+ENV REACT_APP_BACKEND_URL="/api"
 ENV CI=true
 RUN npm test
 
 FROM test as build
 WORKDIR /usr/src/app
 COPY --from=test /usr/src/app .
-ENV REACT_APP_BACKEND_URL="http://localhost:3000"
+ENV REACT_APP_BACKEND_URL="/api"
 RUN npm ci --production
 RUN npm run build
 
